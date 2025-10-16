@@ -33,10 +33,16 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+    public float fallForce = 10f;
+    public float recoveryTime = 1f;
+    public float standSpeed = 1f;
+    public bool isFallen = false;
+    private Quaternion originalRotation;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = new Vector3(0, 1, 0);
         rb.freezeRotation = true;
 
         //readyToJump = true;
@@ -46,6 +52,15 @@ public class PlayerMovement : MonoBehaviour
     {
         // ground check
         //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        if (isFallen)
+        {
+            return;
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            return;
+        }
 
         MyInput();
         SpeedControl();
@@ -59,6 +74,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isFallen)
+        {
+            return;
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            return;
+        }
         MovePlayer();
     }
 
@@ -104,9 +128,66 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void FallOver(Transform npcPos)
+    {
+        if (!isFallen)
+        {
+            StartCoroutine(FallOverCoroutine(npcPos));
+        }
+    }
+
+    IEnumerator FallOverCoroutine(Transform npcPos)
+    {
+        isFallen = true;
+        originalRotation = transform.rotation;
+        //float originalAngleDrag = rb.angularDamping;
+        //rb.angularDamping = 4f;
+        float originalHeight = transform.position.y;
+        rb.constraints = RigidbodyConstraints.None; // Allow full rotation
+        // Apply a force to simulate falling
+        Vector3 forceDir = (transform.position - new Vector3(npcPos.position.x, 2f, npcPos.position.z)).normalized;
+        Vector3 randomTorque = new Vector3(
+            Random.Range(-1f, 1f),
+            Random.Range(-1f, 1f),
+            Random.Range(-1f, 1f)
+            );
+        rb.AddTorque(randomTorque, ForceMode.Impulse);
+        rb.AddForce(forceDir * fallForce, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(recoveryTime);
+
+        // Reset position and rotation over time
+        rb.isKinematic = true;
+        Quaternion startRotation = transform.rotation;
+        Vector3 startPos = transform.position;
+        float elapsedTime = 0f;
+        while (elapsedTime < 1f)
+        {
+            transform.rotation = Quaternion.Slerp(startRotation, originalRotation, elapsedTime);
+            transform.position = Vector3.Lerp(startPos, new Vector3(startPos.x, originalHeight, startPos.z), elapsedTime);
+            elapsedTime += Time.deltaTime * recoveryTime;
+            yield return null;
+        }
+
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // Freeze X and Z rotation
+        rb.isKinematic = false;
+        //rb.angularDamping = originalAngleDrag;
+        isFallen = false;
+
+        FindFirstObjectByType<PlayerCam>().StartCoroutine("RecoveryCoroutine");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("AI"))
+        {
+            FallOver(collision.transform);
+        }
+    }
+
     //private void Jump()
     //{
-        // reset y velocity
+    // reset y velocity
     //    rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
     //    rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);

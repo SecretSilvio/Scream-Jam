@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Targets
+  - FirstPoint
+  - SecondPoint
+  - EndPoint
+  - NPCSpawnPoint
+  - Mom
+  - MomWaypoint
+  - AI
   layers:
   - Default
   - TransparentFX
