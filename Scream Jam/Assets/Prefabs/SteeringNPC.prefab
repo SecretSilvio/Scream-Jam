@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 4970051549961166401}
   m_Layer: 0
   m_Name: SteeringNPC
-  m_TagString: Mom
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,10 +158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Graph: {fileID: -3059184600907824851, guid: 32b4d6dbbb8ac4346905d39e12d8c601,
-    type: 2}
+  m_Graph: {fileID: 2948888028272320496, guid: d304ddc8fd0286843840f6d37a944d31, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 2434192659778896796
+  - rid: 2434192684199706706
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -176,6 +176,15 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 1111654815512979363}
+    - rid: 2434192684199706706
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior,
+        asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 16468393595446918609
+          m_Value1: 2231246797131171742
+        Name: Speed
+        m_Value: 5
 --- !u!195 &4970051549961166401
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -209,7 +218,6 @@ GameObject:
   - component: {fileID: 487922588215187902}
   - component: {fileID: 3739691902930537513}
   - component: {fileID: 9143547742302086961}
-  - component: {fileID: 2105398549485392472}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -226,7 +234,7 @@ Transform:
   m_GameObject: {fileID: 3488303654584784248}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.107, y: 0.08666859, z: -1.269}
+  m_LocalPosition: {x: -0.107, y: 0.021, z: -1.269}
   m_LocalScale: {x: 0.29476, y: 0.29476, z: 0.29476}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -285,28 +293,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2105398549485392472
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3488303654584784248}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &3690655447820013023
 GameObject:
   m_ObjectHideFlags: 0

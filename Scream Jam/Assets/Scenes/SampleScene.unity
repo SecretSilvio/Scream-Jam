@@ -3951,7 +3951,7 @@ GameObject:
   - component: {fileID: 1573517088}
   - component: {fileID: 1573517090}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: SleepinessPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4027,8 +4027,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sleepinessLevel: 0
-  sleepinessIncreaseRate: 0.07
-  sleepinessDecreaseRate: 0.2
+  sleepinessIncreaseRate: 0.03
+  sleepinessDecreaseRate: 0.3
+  sleepinessCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0010070801
+      value: 0
+      inSlope: 4.684248
+      outSlope: 4.684248
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07856961
+    - serializedVersion: 3
+      time: 0.356392
+      value: 0.82447296
+      inSlope: 0.771463
+      outSlope: 0.771463
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.06097187
+    - serializedVersion: 3
+      time: 1.0019531
+      value: 1
+      inSlope: 0.13038278
+      outSlope: 0.13038278
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07483867
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   sleepOverlay: {fileID: 1573517088}
 --- !u!1 &1614419512
 GameObject:
