@@ -220,9 +220,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1805958b1f80cf740864afe3c0bda83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkInterval: 3
-  minMoveDistance: 1
-  stickTimeThreshold: 5
+  checkInterval: 2
+  minMoveDistance: 5
+  stickTimeThreshold: 3
 --- !u!1 &1788638930356291015
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,15 +1,13 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using static UnityEngine.GraphicsBuffer;
 
 public class LostChecker : MonoBehaviour
 {
     public GameObject mom;
     public GameObject player;
-    private SpotLight SpotLight;
+    private Light spotLight;
 
     private float currentDistance;
     public float LostThreshold = 20f;
@@ -20,12 +18,15 @@ public class LostChecker : MonoBehaviour
 
     public AudioSource heartbeatSource;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Coroutine lostCoroutine;
+    private bool isLosing = false;
+
     void Start()
     {
         mom = FindFirstObjectByType<MomController>().gameObject;
         player = FindFirstObjectByType<PlayerMovement>().gameObject;
-        SpotLight = mom.GetComponentInChildren<SpotLight>();
+
+        spotLight = mom.GetComponentInChildren<Light>(); // Use UnityEngine.Light not SpotLight (SpotLight is a LightType)
 
         if (volume.profile.TryGet<Vignette>(out vignette))
         {
@@ -33,49 +34,69 @@ public class LostChecker : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         currentDistance = Vector2.Distance(new Vector2(mom.transform.position.x, mom.transform.position.z), new Vector2(player.transform.position.x, player.transform.position.z));
+
         if (currentDistance > LostThreshold)
         {
-            StartCoroutine(LostCoroutine());
-            SpotLight.color.intensity = 1000f;
-            if (!heartbeatSource.isPlaying)
+            if (!isLosing)
             {
-                heartbeatSource.Play();
+                lostCoroutine = StartCoroutine(LostCoroutine());
+                isLosing = true;
             }
+
+            if (spotLight != null)
+                spotLight.intensity = 1000f;
+
+            if (!heartbeatSource.isPlaying)
+                heartbeatSource.Play();
         }
         else
         {
-            if (heartbeatSource.isPlaying)
+            if (isLosing)
             {
-                SpotLight.color.intensity = 0f;
-                heartbeatSource.Stop();
+                if (lostCoroutine != null)
+                    StopCoroutine(lostCoroutine);
+                if (vignette != null)
+                    vignette.intensity.value = 0f;
+
+                isLosing = false;
             }
+
+            if (spotLight != null)
+                spotLight.intensity = 0f;
+
+            if (heartbeatSource.isPlaying)
+                heartbeatSource.Stop();
         }
     }
 
-    public IEnumerator LostCoroutine()
+    IEnumerator LostCoroutine()
     {
         float timerElapsed = 0f;
+
         while (timerElapsed < TimeToLose)
         {
             if (currentDistance <= LostThreshold)
             {
                 if (vignette != null)
-                {
                     vignette.intensity.value = 0f;
-                }
-                yield break; // Exit the coroutine if the player is back within the threshold
+
+                yield break;
             }
+
             float t = timerElapsed / TimeToLose;
-            vignette.intensity.value = Mathf.Lerp(0, 1, t);
+            if (vignette != null)
+                vignette.intensity.value = Mathf.Lerp(0f, 1f, t);
 
             timerElapsed += Time.deltaTime;
             yield return null;
         }
-        vignette.intensity.value = 1; // Ensure it ends exactly at target
+
+        if (vignette != null)
+            vignette.intensity.value = 1f;
+
         FindFirstObjectByType<SceneTransition>().LoadScene("GameOver");
     }
 }
