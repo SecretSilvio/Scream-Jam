@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using static UnityEngine.GraphicsBuffer;
@@ -8,6 +9,7 @@ public class LostChecker : MonoBehaviour
 {
     public GameObject mom;
     public GameObject player;
+    private SpotLight SpotLight;
 
     private float currentDistance;
     public float LostThreshold = 20f;
@@ -23,6 +25,7 @@ public class LostChecker : MonoBehaviour
     {
         mom = FindFirstObjectByType<MomController>().gameObject;
         player = FindFirstObjectByType<PlayerMovement>().gameObject;
+        SpotLight = mom.GetComponentInChildren<SpotLight>();
 
         if (volume.profile.TryGet<Vignette>(out vignette))
         {
@@ -37,6 +40,7 @@ public class LostChecker : MonoBehaviour
         if (currentDistance > LostThreshold)
         {
             StartCoroutine(LostCoroutine());
+            SpotLight.color.intensity = 1000f;
             if (!heartbeatSource.isPlaying)
             {
                 heartbeatSource.Play();
@@ -46,6 +50,7 @@ public class LostChecker : MonoBehaviour
         {
             if (heartbeatSource.isPlaying)
             {
+                SpotLight.color.intensity = 0f;
                 heartbeatSource.Stop();
             }
         }
