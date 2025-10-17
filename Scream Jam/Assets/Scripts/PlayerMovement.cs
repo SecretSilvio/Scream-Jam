@@ -32,6 +32,10 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 moveDirection;
 
+    //sound
+    private AudioSource audioSource;
+    public AudioClip hitClip;
+
     Rigidbody rb;
     public float fallForce = 10f;
     public float recoveryTime = 1f;
@@ -44,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = new Vector3(0, 1, 0);
         rb.freezeRotation = true;
+
+        audioSource = GetComponent<AudioSource>();
 
         //readyToJump = true;
     }
@@ -139,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator FallOverCoroutine(Transform npcPos)
     {
         isFallen = true;
+        PlayHitSound();
         originalRotation = transform.rotation;
         //float originalAngleDrag = rb.angularDamping;
         //rb.angularDamping = 4f;
@@ -176,6 +183,15 @@ public class PlayerMovement : MonoBehaviour
 
         FindFirstObjectByType<PlayerCam>().StartCoroutine("RecoveryCoroutine");
     }
+
+    private void PlayHitSound()
+{
+    if (hitClip != null)
+    {
+        audioSource.PlayOneShot(hitClip);
+        Debug.Log("Falling sound played!");
+    }
+}
 
     private void OnCollisionEnter(Collision collision)
     {
