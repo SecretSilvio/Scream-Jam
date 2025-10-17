@@ -16,6 +16,8 @@ public class LostChecker : MonoBehaviour
     public Volume volume;
     private Vignette vignette;
 
+    public AudioSource heartbeatSource;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,6 +37,17 @@ public class LostChecker : MonoBehaviour
         if (currentDistance > LostThreshold)
         {
             StartCoroutine(LostCoroutine());
+            if (!heartbeatSource.isPlaying)
+            {
+                heartbeatSource.Play();
+            }
+        }
+        else
+        {
+            if (heartbeatSource.isPlaying)
+            {
+                heartbeatSource.Stop();
+            }
         }
     }
 
