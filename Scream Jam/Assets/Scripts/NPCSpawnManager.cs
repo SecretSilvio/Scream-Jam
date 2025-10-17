@@ -32,7 +32,22 @@ public class NPCSpawnManager : MonoBehaviour
             if (allNPCs.Count < maxNPCs && spawnPoints.Count > 0)
             {
                 Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-                SpawnNPC(randomSpawnPoint);
+                Collider[] hit = Physics.OverlapSphere(randomSpawnPoint.position, 8.0f);
+                bool canSpawn = true;
+                foreach (Collider col in hit)
+                {
+                    if (col.CompareTag("AI") || col.CompareTag("Mom"))
+                    {
+                        canSpawn = false;
+                        // Debug.Log("Spawn point occupied, skipping spawn.");
+                        yield return null;
+                    }
+                }
+
+                if (canSpawn)
+                {
+                    SpawnNPC(randomSpawnPoint);
+                }
                 
             }
             allNPCs.RemoveAll(obj => obj == null);
