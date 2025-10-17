@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 8162407460343901730}
   - component: {fileID: 8436850315712654551}
   - component: {fileID: 4970051549961166401}
+  - component: {fileID: 964493944246578460}
   m_Layer: 0
   m_Name: SteeringNPC
   m_TagString: AI
@@ -207,6 +208,21 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &964493944246578460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111654815512979363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1805958b1f80cf740864afe3c0bda83a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkInterval: 3
+  minMoveDistance: 1
+  stickTimeThreshold: 5
 --- !u!1 &1788638930356291015
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,6 +279,7 @@ GameObject:
   - component: {fileID: 487922588215187902}
   - component: {fileID: 3739691902930537513}
   - component: {fileID: 9143547742302086961}
+  - component: {fileID: 7808110712923454391}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -316,7 +333,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a74b4f46f773f17418782f4d8d95d910, type: 2}
+  - {fileID: 2100000, guid: c0a48acf4447a214790e242820aa6739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -338,6 +355,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7808110712923454391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3488303654584784248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c4656a08593a0448e9df30e4751042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcMaterials:
+  - {fileID: 2100000, guid: c0a48acf4447a214790e242820aa6739, type: 2}
+  - {fileID: 2100000, guid: d0742fac96abde34a912723f039f0a68, type: 2}
+  - {fileID: 2100000, guid: 20955b426dd76514fb733e056686bc44, type: 2}
+  - {fileID: 2100000, guid: fb4dec26d550b6940962cb3497b3ffd6, type: 2}
+  - {fileID: 2100000, guid: a74b4f46f773f17418782f4d8d95d910, type: 2}
+  - {fileID: 2100000, guid: cf2e063bad012fb478311ddb6548299a, type: 2}
+  - {fileID: 2100000, guid: 36cccdbcc0cde0d4eaad785fab7684e4, type: 2}
+  meshRenderer: {fileID: 9143547742302086961}
 --- !u!1 &3690655447820013023
 GameObject:
   m_ObjectHideFlags: 0

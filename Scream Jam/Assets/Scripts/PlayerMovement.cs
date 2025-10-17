@@ -33,8 +33,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     //sound
-    private AudioSource audioSource;
-    public AudioClip hitClip;
+    [SerializeField]
+    private AudioSource hitSource;
 
     Rigidbody rb;
     public float fallForce = 10f;
@@ -48,8 +48,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = new Vector3(0, 1, 0);
         rb.freezeRotation = true;
-
-        audioSource = GetComponent<AudioSource>();
 
         //readyToJump = true;
     }
@@ -176,12 +174,10 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        rb.angularVelocity = Vector3.zero;
-        rb.linearVelocity = Vector3.zero;
-        transform.rotation = originalRotation;
-
         rb.freezeRotation = true;
         rb.isKinematic = false;
+        rb.angularVelocity = Vector3.zero;
+        transform.rotation = originalRotation;
         //rb.angularDamping = originalAngleDrag;
         isFallen = false;
 
@@ -189,13 +185,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void PlayHitSound()
-{
-    if (hitClip != null)
     {
-        audioSource.PlayOneShot(hitClip);
-        Debug.Log("Falling sound played!");
+        hitSource.Play();
     }
-}
 
     private void OnCollisionEnter(Collision collision)
     {
