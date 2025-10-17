@@ -12,6 +12,11 @@ public class SceneTransition : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (SceneManager.GetActiveScene().name != "finalScene")
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
         StartCoroutine(FadeIn());
     }
 
