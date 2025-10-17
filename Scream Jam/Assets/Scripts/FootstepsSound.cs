@@ -3,7 +3,7 @@ using UnityEngine;
 public class FootstepsSound : MonoBehaviour
 {
 
-public AudioSource footstepsSource;
+    public AudioSource footstepsSource;
     public AudioClip[] footstepClips;
     public float stepInterval = 0.4f; // seconds between steps
     public float pitchVariation = 0.1f;
@@ -12,8 +12,29 @@ public AudioSource footstepsSource;
     private float stepTimer = 0f;
     private bool isMoving;
 
+    [SerializeField]
+    private PlayerMovement playerMovement;
+
+    private void Start()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
+    }
+
     void Update()
     {
+        if (playerMovement.isFallen)
+        {
+            footstepsSource.Stop();
+            stepTimer = 0f;
+            return;
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            footstepsSource.Stop();
+            stepTimer = 0f;
+            return;
+        }
+
         // Check for movement input
         isMoving = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
                    Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
@@ -39,10 +60,6 @@ public AudioSource footstepsSource;
         {
             // Reset timer when not moving
             stepTimer = 0f;
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-        footstepsSource.Stop();
         }
     }
 }
