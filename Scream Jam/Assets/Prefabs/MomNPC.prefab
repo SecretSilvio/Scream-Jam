@@ -435,6 +435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7107004944464664606}
+  - component: {fileID: 7942051191089594581}
   m_Layer: 0
   m_Name: billboarding
   m_TagString: Untagged
@@ -458,6 +459,18 @@ Transform:
   - {fileID: 4457564444848755598}
   m_Father: {fileID: 8453870070916411937}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7942051191089594581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7525736643738302636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2a24d2cb9abbdd438d7cc8cd62107c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2372056373479151167
 PrefabInstance:
   m_ObjectHideFlags: 0
