@@ -58,5 +58,6 @@ public class LostChecker : MonoBehaviour
             yield return null;
         }
         vignette.intensity.value = 1; // Ensure it ends exactly at target
+        FindFirstObjectByType<SceneTransition>().LoadScene("GameOver");
     }
 }
