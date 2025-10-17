@@ -176,7 +176,11 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // Freeze X and Z rotation
+        rb.angularVelocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
+        transform.rotation = originalRotation;
+
+        rb.freezeRotation = true;
         rb.isKinematic = false;
         //rb.angularDamping = originalAngleDrag;
         isFallen = false;
